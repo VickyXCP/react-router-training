@@ -9,7 +9,10 @@ import './index.css';
 // import App from './06-no-match';
 // import App from './07-recursive-paths';
 // import App from './08-sidebar';
-import App from './09-animated-transitions';
+// import App from './09-animated-transitions';
+// import App from './10-anbiguous-matches';
+// import App from './11-route-config';
+import App from './12-modal-gallery';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));
