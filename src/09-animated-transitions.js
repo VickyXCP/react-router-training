@@ -1,62 +1,23 @@
 import React from 'react'
-import {TransitionGroup,  CSSTransition} from 'react-transition-group'
+import {TransitionGroup, CSSTransition} from 'react-transition-group'
 import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom'
 
-/*const AnimationExample = () => (
-  <BrowserRouter>
-    <Route
-      render={({ location }) => (
-        <div style={styles.fill}>
-          <Route
-            exact
-            path="/"
-            render={() => <Redirect to="/hsl/10/90/50" />}
-          />
-          
-          <ul style={styles.nav}>
-            <NavLink to="/hsl/10/90/50">Red</NavLink>
-            <NavLink to="/hsl/120/100/40">Green</NavLink>
-            <NavLink to="/rgb/33/150/243">Blue</NavLink>
-            <NavLink to="/rgb/240/98/146">Pink</NavLink>
-          </ul>
-          
-          <div style={styles.content}>
-            <TransitionGroup>
-              <CSSTransition key={location.key} classNames="fade" timeout={300}>
-                <Switch location={location}>
-                  <Route exact path="/hsl/:h/:s/:l" component={HSL} />
-                  <Route exact path="/rgb/:r/:g/:b" component={RGB} />
-                  <Route render={() => <div>Not Found</div>} />
-                </Switch>
-              </CSSTransition>
-            </TransitionGroup>
-          </div>
-        </div>
-      )}
-    />
-  </BrowserRouter>
-);*/
-
-class AnimationExample extends React.Component{
-  render(){
+class AnimationExample extends React.Component {
+  render() {
     return (
       <BrowserRouter>
-        <Route render={(location)=>(
+        <Route render={({location})=>(
           <div style={styles.fill}>
-  
-            <Route
-              exact
-              path="/"
-              render={() => <Redirect to="/hsl/10/90/50" />}
-            />
-            
+            {/*将初始页面重定向到第一个色彩页*/}
+            <Route exact path={'/'} render={()=><Redirect to={'/hsl/10/90/50'}/>}/>
+            {/*颜色列表*/}
             <ul style={styles.nav}>
               <NavLink to={'/hsl/10/90/50'}>Red</NavLink>
               <NavLink to={'/hsl/120/100/40'}>Green</NavLink>
               <NavLink to={'/rgb/33/150/243'}>Blue</NavLink>
               <NavLink to={'/rgb/240/98/146'}>Pink</NavLink>
             </ul>
-            
+            {/*匹配路由*/}
             <div style={styles.content}>
               <TransitionGroup>
                 <CSSTransition key={location.key} classNames={"fade"} timeout={300}>
@@ -68,7 +29,6 @@ class AnimationExample extends React.Component{
                 </CSSTransition>
               </TransitionGroup>
             </div>
-            
           </div>
         )}/>
       </BrowserRouter>
@@ -76,18 +36,20 @@ class AnimationExample extends React.Component{
   }
 }
 
-class NavLink extends React.Component{
-  constructor (props){
-    super(props)
-  }
-  render(){
+//接收参数的子项
+class NavLink extends React.Component {
+  render() {
     return (
-      <li style={styles.navItem}><Link {...this.props} style={{color:'inherit'}}/></li>
+      <li style={styles.navItem}>
+        <Link {...this.props} style={{color: 'inherit'}}/>
+      </li>
     )
   }
 }
 
-const HSL = ({match: {params}})=>(
+//HSL圆柱坐标系统  （Hue-saturation-lightness）色相-饱和度-明度
+//https://developer.mozilla.org/zh-CN/docs/Web/CSS/color_value
+const HSL = ({match: {params}}) => (
   <div style={{
     ...styles.fill,
     ...styles.hsl,
@@ -95,9 +57,12 @@ const HSL = ({match: {params}})=>(
   }}>
     hsl({params.h}, {params.s}%, {params.l}%)
   </div>
-)
+);
 
-const RGB = ({match: {params}})=>(
+/*
+* 用RGB立体坐标（RGB cubic-coordinate）系统
+* */
+const RGB = ({match: {params}}) => (
   <div style={{
     ...styles.fill,
     ...styles.hsl,
@@ -105,9 +70,9 @@ const RGB = ({match: {params}})=>(
   }}>
     rgb({params.r}, {params.g}, {params.b})
   </div>
-)
+);
 
-const styles = {}
+const styles = {};
 
 styles.fill = {
   position: 'absolute',
@@ -115,7 +80,7 @@ styles.fill = {
   right: 0,
   top: 0,
   bottom: 0
-}
+};
 
 styles.content = {
   ...styles.fill,
